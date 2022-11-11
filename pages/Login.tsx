@@ -70,6 +70,7 @@ const Login = ({componentId}: Props): Node => {
           <TextInput
             placeholder="비밀번호를 입력해주세요."
             value={password}
+            secureTextEntry={true}
             onChangeText={value => {
               setPassword(value);
             }}
