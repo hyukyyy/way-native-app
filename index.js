@@ -3,14 +3,9 @@
  */
 
 import { Navigation } from 'react-native-navigation';
-import ProviderWrapper from './components/ProviderWrapper';
-import Login from './pages/Login';
+import initializeNavigation from './navigation';
 
-Navigation.registerComponent('com.way.Login', () => props => (
-  <ProviderWrapper>
-    <Login />
-  </ProviderWrapper>
-));
+initializeNavigation();
 Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setRoot({
     root: {

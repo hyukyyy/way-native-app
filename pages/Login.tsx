@@ -14,13 +14,14 @@ import {
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {getTokenState, loginThunk} from '../store/userReducer';
 import {useSelector, useDispatch, Provider} from 'react-redux';
+import {Navigation} from 'react-native-navigation';
 
 interface Props {
   componentId: string;
 }
 interface State {}
 
-const Login = ({}: Props): Node => {
+const Login = ({componentId}: Props): Node => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -30,16 +31,26 @@ const Login = ({}: Props): Node => {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
 
-  useEffect(() => {
-    console.log(username, password);
-  }, [username, password]);
-
   const token = useSelector(getTokenState);
   const dispatch = useDispatch();
 
   const handleLogin = () => {
     dispatch(loginThunk({username, password}));
   };
+
+  const setMainCompRoot = () => {
+    Navigation.setRoot({
+      root: {
+        component: {name: 'com.way.Main', passProps: {}},
+      },
+    });
+  };
+
+  useEffect(() => {
+    if ('' != token) {
+      setMainCompRoot();
+    }
+  }, [token]);
 
   return (
     <SafeAreaView style={backgroundStyle}>
