@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import MapView from 'react-native-maps';
-import {Header as HeaderRNE, HeaderProps, Icon} from '@rneui/themed';
+import {Header as HeaderRNE, Icon} from '@rneui/themed';
 
 interface Props {
   componentId: string;
