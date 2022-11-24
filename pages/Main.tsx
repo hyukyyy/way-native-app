@@ -1,19 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
-  Text,
   TouchableOpacity,
   useWindowDimensions,
   View,
 } from 'react-native';
 import MapView from 'react-native-maps';
 import {Header as HeaderRNE, Icon} from '@rneui/themed';
+import Menu from './Menu';
+import {Navigation} from 'react-native-navigation';
 
 interface Props {
   componentId: string;
 }
 
 const Main = ({componentId}: Props) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const {width, height} = useWindowDimensions();
 
   const styles = StyleSheet.create({
@@ -54,6 +57,21 @@ const Main = ({componentId}: Props) => {
       fontWeight: 'bold',
     },
   });
+
+  const onSelectMenu = (componentRoute: string) => {
+    console.log('componentId');
+    console.log(componentId);
+    console.log(componentRoute);
+    Navigation.push(componentId, {
+      component: {
+        name: componentRoute,
+        id: componentRoute,
+        passProps: {},
+        options: {},
+      },
+    });
+  };
+
   return (
     <>
       <MapView
@@ -70,7 +88,7 @@ const Main = ({componentId}: Props) => {
         <HeaderRNE
           backgroundColor="black"
           leftComponent={
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => setMenuOpen(!menuOpen)}>
               <Icon type="material-community-icons" name="menu" color="white" />
             </TouchableOpacity>
           }
@@ -86,6 +104,9 @@ const Main = ({componentId}: Props) => {
           }
           centerComponent={{text: 'Way', style: styles.heading}}
         />
+        {menuOpen && (
+          <Menu componentId={componentId} onSelectMenu={onSelectMenu} />
+        )}
       </View>
     </>
   );

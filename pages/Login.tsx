@@ -41,7 +41,21 @@ const Login = ({componentId}: Props): Node => {
   const setMainCompRoot = () => {
     Navigation.setRoot({
       root: {
-        component: {name: 'com.way.Main', passProps: {}},
+        stack: {
+          children: [
+            {
+              component: {
+                name: 'com.way.Main',
+                passProps: {},
+                // options: {
+                //   topBar: {
+                //     visible: false,
+                //   },
+                // },
+              },
+            },
+          ],
+        },
       },
     });
   };
