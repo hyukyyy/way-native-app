@@ -14,6 +14,7 @@ import {getTokenState} from '../store/userReducer';
 import {Header as HeaderRNE, Icon} from '@rneui/themed';
 import {ListItem} from '@rneui/base';
 import {friendListSelector, getFriendListThunk} from '../store/friendReducer';
+import {Navigation} from 'react-native-navigation';
 
 const FriendList = props => {
   const friendList = useSelector(friendListSelector);
@@ -73,8 +74,8 @@ const FriendList = props => {
       <HeaderRNE
         backgroundColor="black"
         leftComponent={
-          <TouchableOpacity>
-            <Icon type="material-community-icons" name="menu" color="white" />
+          <TouchableOpacity onPress={() => Navigation.pop(props.componentId)}>
+            <Icon type="material-community-icons" name="chevron-left" color="white" />
           </TouchableOpacity>
         }
         centerComponent={{text: '친구목록', style: styles.headerText}}

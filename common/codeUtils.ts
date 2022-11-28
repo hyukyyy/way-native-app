@@ -4,17 +4,13 @@ export interface menu {
 }
 const allMenus: Array<menu> = [
     {
+        name: "마이페이지",
+        componentRoute: "com.way.MyPage"
+    },
+    {
         name: "친구목록",
         componentRoute: "com.way.FriendList"
     },
-    {
-        name: "친구목록1",
-        componentRoute: "com.way.FriendList"
-    },
-    {
-        name: "친구목록2",
-        componentRoute: "com.way.FriendList"
-    }
 ];
 
 export { allMenus };

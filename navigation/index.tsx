@@ -4,6 +4,7 @@ import ProviderWrapper from '../components/ProviderWrapper';
 import FriendList from '../pages/FriendList';
 import Login from '../pages/Login';
 import Main from '../pages/Main';
+import MyPage from '../pages/MyPage';
 import {store} from '../store';
 
 const initializeNavigation = (): void => {
@@ -27,6 +28,12 @@ const initializeNavigation = (): void => {
   Navigation.registerComponent('com.way.FriendList', () => props => (
     <ProviderWrapper>
       <FriendList {...props} />
+    </ProviderWrapper>
+  ));
+
+  Navigation.registerComponent('com.way.MyPage', () => props => (
+    <ProviderWrapper>
+      <MyPage {...props} />
     </ProviderWrapper>
   ));
 };
