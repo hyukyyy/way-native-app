@@ -34,6 +34,7 @@ export const friendSlice = createSlice({
   extraReducers: {
     [getFriendListThunk.fulfilled.type]: (state: stateType, action: PayloadAction<{ friendList: Array<User> }>) => {
       console.log(getFriendListThunk.fulfilled);
+      console.log(action.payload.friendList);
       state.friendList = action.payload.friendList;
     },
     [getFriendListThunk.rejected.type]: (state: stateType, action: PayloadAction<{ message: string, status: number }>) => {

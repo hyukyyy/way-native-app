@@ -16,19 +16,7 @@ import {ListItem} from '@rneui/base';
 import {friendListSelector, getFriendListThunk} from '../store/friendReducer';
 
 const FriendList = props => {
-  const [filterIsOnline, setfilterIsOnline] = useState(false);
-  const token = useSelector(getTokenState);
   const friendList = useSelector(friendListSelector);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getFriendListThunk({token: token, isOnline: filterIsOnline}));
-  }, []);
-
-  useEffect(() => {
-    console.log('===== friendList =====');
-    console.log(friendList);
-  }, [friendList]);
 
   const renderHeader = () => {
     return (

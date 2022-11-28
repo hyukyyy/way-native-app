@@ -1,14 +1,18 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
   useWindowDimensions,
   View,
 } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 import {Header as HeaderRNE, Icon} from '@rneui/themed';
 import Menu from './Menu';
 import {Navigation} from 'react-native-navigation';
+import {useDispatch, useSelector} from 'react-redux';
+import {getTokenState} from '../store/userReducer';
+import {friendListSelector, getFriendListThunk} from '../store/friendReducer';
+import {User} from '../data/types';
 
 interface Props {
   componentId: string;
@@ -16,6 +20,18 @@ interface Props {
 
 const Main = ({componentId}: Props) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const dispatch = useDispatch();
+  const token = useSelector(getTokenState);
+  const friendList = useSelector(friendListSelector);
+
+  useEffect(() => {
+    const intervalId = setInterval(
+      () => dispatch(getFriendListThunk({token: token, isOnline: true})),
+      1000,
+    );
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const {width, height} = useWindowDimensions();
 
@@ -77,13 +93,24 @@ const Main = ({componentId}: Props) => {
       <MapView
         style={{width: '100%', height: '100%', position: 'absolute'}}
         initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          latitude: 37.5244813,
+          longitude: 127.0353667,
+          latitudeDelta: 5,
+          longitudeDelta: 5,
         }}
-        zoomControlEnabled
-      />
+        zoomControlEnabled>
+        {friendList.map((user: User) => {
+          return (
+            <Marker
+              key={user.id}
+              coordinate={{
+                latitude: user.latitude,
+                longitude: user.longitude,
+              }}
+            />
+          );
+        })}
+      </MapView>
       <View style={[styles.background]}>
         <HeaderRNE
           backgroundColor="black"
