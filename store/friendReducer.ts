@@ -1,6 +1,8 @@
+import { getFriedListRequest } from './../api/types/types';
 import { User } from './../data/types';
 import { RootState } from './index';
-=import { createSlice, createAsyncThunk, PayloadAction, createSelector } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction, createSelector } from '@reduxjs/toolkit';
+import { getFriendListApi } from '../api/userApi';
 
 const reducerName = 'friendReducer';
 
@@ -12,14 +14,14 @@ const initialState: stateType = {
   friendList: [],
 };
 
-// export const loginThunk = createAsyncThunk(`${reducerName}/login`, async (request: loginRequest, thunkApi) => {
-//   try {
-//     console.log("loginThunk pending");
-//     return await loginApi(request);
-//   } catch (e) {
-//     return thunkApi.rejectWithValue(await e.response.data);
-//   }
-// })
+export const getFriendListThunk = createAsyncThunk(`${reducerName}/friend`, async (request: getFriedListRequest, thunkApi) => {
+  try {
+    console.log("getFriendListThunk pending");
+    return await getFriendListApi(request);
+  } catch (e) {
+    return thunkApi.rejectWithValue(await e.response.data);
+  }
+})
 
 export const friendSlice = createSlice({
   name: reducerName,
@@ -29,20 +31,20 @@ export const friendSlice = createSlice({
       state.friendList = action.payload.friendList;
     },
   },
-  // extraReducers: {
-  //   [loginThunk.fulfilled.type]: (state: stateType, action: PayloadAction<{ token: string }>) => {
-  //     console.log(loginThunk.fulfilled);
-  //     state.token = action.payload.token;
-  //   },
-  //   [loginThunk.rejected.type]: (state: stateType, action: PayloadAction<{ message: string, status: number }>) => {
-  //     state.token = "";
-  //   }
-  // },
+  extraReducers: {
+    [getFriendListThunk.fulfilled.type]: (state: stateType, action: PayloadAction<{ friendList: Array<User> }>) => {
+      console.log(getFriendListThunk.fulfilled);
+      state.friendList = action.payload.friendList;
+    },
+    [getFriendListThunk.rejected.type]: (state: stateType, action: PayloadAction<{ message: string, status: number }>) => {
+      state.friendList = [];
+    }
+  },
 });
 
-const tokenState = (state: RootState) => state.userReducer.token;
+const friendList = (state: RootState) => state.friendReducer.friendList;
 
-export const getTokenState = createSelector(tokenState, token => token);
+export const friendListSelector = createSelector(friendList, friendList => friendList);
 
 export const { setFriendList } = friendSlice.actions;
 

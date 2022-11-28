@@ -1,4 +1,5 @@
 import userReducer  from './userReducer';
+import friendReducer from './friendReducer';
 import {
     configureStore,
     getDefaultMiddleware,
@@ -7,7 +8,8 @@ import {
 
 export const store = configureStore({
     reducer: {
-        userReducer
+        userReducer,
+        friendReducer
     },
     middleware: getDefaultMiddleware(),
     devTools: process.env.NODE_ENV !== 'production'

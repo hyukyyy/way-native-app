@@ -1,4 +1,4 @@
-import { loginRequest, getFriedListRequest } from './types/types';
+import { loginRequest, getFriedListRequest, getFriedListResponse } from './types/types';
 import axios from 'axios';
 
 const loginApi = async (request: loginRequest) => {
@@ -12,19 +12,19 @@ const loginApi = async (request: loginRequest) => {
     }
 }
 
-const getFriendList = async (request: getFriedListRequest) => {
+const getFriendListApi = async (request: getFriedListRequest): Promise<getFriedListResponse> => {
     try {
-        return await axios({
+        const res = await axios({
             method: "get", url: "http://192.168.9.200/user/friend", params: request, headers: {
                 Authorization: request.token
             }
         });
-
+        return res.data;
     } catch (e) {
         console.error("error while getFriendList", e)
-        return e
+        throw e;
     }
 }
 
 
-export { loginApi, getFriendList }
+export { loginApi, getFriendListApi }

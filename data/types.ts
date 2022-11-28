@@ -4,4 +4,7 @@ export type User = {
     latitude: number;
     longitude: number;
     isOnline: boolean;
+    successCnt: number;
+    lateCnt: number;
+    phoneNo: number;
 }
